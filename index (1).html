@@ -1,0 +1,131 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vacarya · Monthly cashflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:linear-gradient(150deg,#0B2436 0%,#0E3247 55%,#0B2436 100%);color:#fff;font-family:Inter,system-ui,sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;padding:4vh 4vw}
+.wrap{max-width:1340px;margin:0 auto}
+.hd{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #3E6E8C;padding-bottom:14px;margin-bottom:14px}
+h1{font-family:Fraunces,Georgia,serif;font-weight:300;font-size:clamp(22px,2.5vw,32px);letter-spacing:-.01em}
+.mark{font-family:Inter,sans-serif;font-weight:400;letter-spacing:.06em;font-size:clamp(18px,1.9vw,26px)}
+.method{font-size:clamp(11px,.95vw,13px);color:#B7D0DF;line-height:1.7;margin-bottom:26px}
+.method b{font-weight:400;color:#fff}
+.lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8FB4C9;margin-bottom:9px}
+.lbl b{font-weight:500;color:#fff}
+.bands,.sc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#3E6E8C;border:1px solid #3E6E8C}
+.b{background:#0C2B3E;padding:22px}
+.b .t{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8FB4C9;margin-bottom:10px}
+.b .n{font-size:clamp(34px,4vw,50px);font-weight:300;letter-spacing:-.04em;line-height:.9;font-variant-numeric:tabular-nums}
+.b .pm{font-size:11.5px;color:#B7D0DF;margin-top:7px}
+.b .q{font-size:10px;color:#7FA5BC;margin-top:10px;border-top:1px solid #24506B;padding-top:8px}
+.s{background:#0A2434;padding:18px 22px}
+.s .u{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#B7D0DF}
+.s .n{font-size:clamp(24px,2.6vw,32px);font-weight:300;letter-spacing:-.03em;line-height:1;margin-top:7px;color:#C9A961;font-variant-numeric:tabular-nums}
+.s .f{font-size:10px;color:#7FA5BC;margin-top:6px}
+.ex{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:#3E6E8C;border:1px solid #3E6E8C}
+.e{background:#0C2B3E;padding:16px 12px;display:block;text-decoration:none;color:inherit;transition:background .15s}
+.e:hover{background:#123449}
+.e .nm{font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:#B7D0DF;line-height:1.5;height:25px}
+.e .a{font-size:clamp(19px,2vw,25px);font-weight:300;letter-spacing:-.03em;line-height:1;margin-top:6px;font-variant-numeric:tabular-nums}
+.e .pm{font-size:9px;color:#7FA5BC;margin-top:3px}
+.e .tag{display:inline-block;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#C9A961;border:1px solid #56514A;padding:2px 6px;margin-top:9px}
+.e .go{display:inline-flex;align-items:center;gap:4px;margin-top:9px;font-size:9.5px;color:#fff;border-bottom:1px solid #fff;padding-bottom:2px}
+.e .go svg{width:7px;height:7px}
+
+.calc{margin-top:30px;border:1px solid #C9A961;background:rgba(201,169,97,.05);padding:26px 28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.85fr);gap:34px;align-items:center}
+.calc .q{font-size:13px;color:#B7D0DF;margin-bottom:13px}
+.row{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.step{width:46px;height:46px;background:transparent;border:1px solid #3E6E8C;color:#fff;font-size:23px;font-weight:300;cursor:pointer;line-height:1;transition:.15s}
+.step:hover{border-color:#fff;background:rgba(255,255,255,.07)}
+.step:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#u{width:100px;height:46px;background:rgba(255,255,255,.08);border:1px solid #3E6E8C;color:#fff;font-family:inherit;font-size:26px;font-weight:300;text-align:center;font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+#u::-webkit-outer-spin-button,#u::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+#u:focus{outline:none;border-color:#fff}
+.ul{font-size:13px;color:#B7D0DF}
+.pills{display:flex;gap:1px;background:#3E6E8C;border:1px solid #3E6E8C}
+.pill{flex:1;background:#0C2B3E;border:none;color:#8FB4C9;font-family:inherit;font-weight:300;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:15px 8px;cursor:pointer;transition:.15s}
+.pill:hover{background:#123449;color:#fff}
+.pill[aria-pressed=true]{background:#C9A961;color:#0B2436;font-weight:400}
+.pill:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.out{text-align:center;border-left:1px solid #24506B;padding-left:34px}
+.big{font-size:clamp(48px,7vw,88px);font-weight:300;letter-spacing:-.045em;line-height:.88;color:#C9A961;font-variant-numeric:tabular-nums}
+.out .pm{font-size:14px;color:#B7D0DF;margin-top:12px}
+.det{font-size:11px;color:#7FA5BC;margin-top:15px;border-top:1px solid #24506B;padding-top:12px}
+@media(max-width:900px){.bands,.sc,.calc{grid-template-columns:1fr}.ex{grid-template-columns:repeat(2,1fr)}.out{border-left:none;border-top:1px solid #24506B;padding-left:0;padding-top:24px}}
+</style>
+
+<div class="wrap">
+  <div class="hd"><h1>Cashflow Calculator</h1><div class="mark">Vacarya Partnership</div></div>
+  <p class="method">Realized net cashflow across 400+ units, each with 12+ months of operating history. Below is what the partner keeps <b>after</b> rent, utilities, cleaning, <b>and</b> the Vacarya performance share. The share is 8% at 1 to 4 units, 7% at 5 to 9, and 6% at 10 and up.</p>
+
+  <div class="bands">
+    <div class="b"><div class="t">Conservative</div><div class="n">$746</div><div class="pm">per unit, per month</div><div class="q">Lower quartile of the portfolio</div></div>
+    <div class="b"><div class="t">Average</div><div class="n">$928</div><div class="pm">per unit, per month</div><div class="q">Median of the portfolio</div></div>
+    <div class="b"><div class="t">Strong</div><div class="n">$1,104</div><div class="pm">per unit, per month</div><div class="q">Upper quartile of the portfolio</div></div>
+  </div>
+
+  <div class="lbl" style="margin-top:26px">At the <b>average</b>, as you scale</div>
+  <div class="sc">
+    <div class="s"><div class="u">3 units &middot; 8% share</div><div class="n">$2,784</div><div class="f">per month &middot; $928 per unit</div></div>
+    <div class="s"><div class="u">5 units &middot; 7% share</div><div class="n">$4,820</div><div class="f">per month &middot; $964 per unit</div></div>
+    <div class="s"><div class="u">10 units &middot; 6% share</div><div class="n">$10,010</div><div class="f">per month &middot; $1,001 per unit</div></div>
+  </div>
+
+  <div class="lbl" style="margin-top:26px">Portfolio examples</div>
+  <div class="ex">
+    <a class="e" href="https://www.airbnb.com/rooms/1187651325753130500"><div class="nm">Kansas City<br>Broadway</div><div class="a">$1,358</div><div class="pm">per month</div><div class="tag">Strong</div><br><span class="go">Listing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span></a>
+    <a class="e" href="https://www.airbnb.com/rooms/1319935211128560655"><div class="nm">Philadelphia<br>Fairmount</div><div class="a">$1,120</div><div class="pm">per month</div><div class="tag">Strong</div><br><span class="go">Listing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span></a>
+    <a class="e" href="https://www.airbnb.com/rooms/1218092002051262649"><div class="nm">Fuller Flats<br>Minneapolis</div><div class="a">$1,116</div><div class="pm">per month</div><div class="tag">Strong</div><br><span class="go">Listing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span></a>
+    <a class="e" href="https://www.airbnb.com/rooms/1498351482817119599"><div class="nm">Altitude<br>Atlanta</div><div class="a">$959</div><div class="pm">per month</div><div class="tag">Average</div><br><span class="go">Listing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span></a>
+    <a class="e" href="https://www.airbnb.com/rooms/1233322519113511733"><div class="nm">Dallas<br>Roseland</div><div class="a">$883</div><div class="pm">per month</div><div class="tag">Average</div><br><span class="go">Listing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span></a>
+    <a class="e" href="https://www.airbnb.com/rooms/1298617061313254752"><div class="nm">Downtown<br>Dallas</div><div class="a">$781</div><div class="pm">per month</div><div class="tag">Conservative</div><br><span class="go">Listing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span></a>
+  </div>
+
+  <div class="calc">
+    <div>
+      <div class="q">How many units?</div>
+      <div class="row">
+        <button class="step" id="m" aria-label="Fewer">&minus;</button>
+        <input type="number" id="u" value="3" min="1" max="50" aria-label="Units">
+        <button class="step" id="p" aria-label="More">+</button>
+        <span class="ul" id="ul">units</span>
+      </div>
+      <div class="pills" role="group" aria-label="Band">
+        <button class="pill" data-k="lo" aria-pressed="false">Conservative</button>
+        <button class="pill" data-k="mid" aria-pressed="true">Average</button>
+        <button class="pill" data-k="hi" aria-pressed="false">Strong</button>
+      </div>
+    </div>
+    <div class="out">
+      <div class="big" id="n">$2,784</div>
+      <div class="pm">per month</div>
+      <div class="det" id="d">$928 per unit &middot; 8% performance share</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var BANDS={lo:746,mid:928,hi:1104}, BUMP={8:0,7:36,6:73};
+  var k='mid', u=document.getElementById('u');
+  function rate(n){return n>=10?6:n>=5?7:8;}
+  function f(v){return '$'+Math.round(v).toLocaleString();}
+  function draw(){
+    var n=Math.max(1,Math.min(50,parseInt(u.value)||1));
+    var r=rate(n), per=BANDS[k]+BUMP[r];
+    document.getElementById('n').textContent=f(per*n);
+    document.getElementById('d').innerHTML=f(per)+' per unit &middot; '+r+'% performance share';
+    document.getElementById('ul').textContent=n===1?'unit':'units';
+  }
+  document.getElementById('p').onclick=function(){u.value=Math.min(50,(parseInt(u.value)||0)+1);draw();};
+  document.getElementById('m').onclick=function(){u.value=Math.max(1,(parseInt(u.value)||2)-1);draw();};
+  u.addEventListener('input',draw);
+  document.querySelectorAll('.pill').forEach(function(b){
+    b.onclick=function(){k=b.dataset.k;document.querySelectorAll('.pill').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');draw();};
+  });
+  draw();
+})();
+</script>
